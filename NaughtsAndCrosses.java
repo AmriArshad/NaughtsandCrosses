@@ -22,11 +22,50 @@ public class NaughtsAndCrosses extends JPanel{
 	// display the text NAUGHT, CROSS or BLANK (see above). 
 	private JButton[][] _board;
 
+	// Variable that tracks whos turn it is
+	private Boolean isCrossTurn = true;
+	
 	public NaughtsAndCrosses() {
 		// Build the GUI.
 		buildGUI();
 		
 		// TO DO: set up event handlers.
+
+		for(int row = 0; row < ROWS; row++) {
+			for(int col = 0; col < COLS; col++) {
+				_board[row][col].addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						if (getGameStatus() == GameStatus.IN_PROGRESS){
+							if (((JButton) e.getSource()).getText() == BLANK){
+								if (isCrossTurn == true){
+									((JButton) e.getSource()).setText(CROSS);
+									isCrossTurn = false;
+								}
+								else{
+									((JButton) e.getSource()).setText(NAUGHT);
+									isCrossTurn = true;
+								}
+							}
+							
+						}
+						if (getGameStatus() == GameStatus.NAUGHT_WON){
+							JFrame winFrame = new JFrame();
+							winFrame.add(new JLabel("Naught won"));
+							winFrame.setSize(100,50);
+							winFrame.setLocationRelativeTo(null);
+							winFrame.setVisible(true);
+						}
+						else if (getGameStatus() == GameStatus.CROSS_WON){
+							JFrame winFrame = new JFrame();
+							winFrame.add(new JLabel("Cross won"));
+							winFrame.setSize(100,50);
+							winFrame.setLocationRelativeTo(null);
+							winFrame.setVisible(true);
+						}
+					}
+				});
+			}
+		}
 
 	}
 	
