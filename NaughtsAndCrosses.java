@@ -1,13 +1,12 @@
-
-
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
-import javax.swing.JButton;
-
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 @SuppressWarnings("serial")
-public class NaughtsAndCrosses {
+public class NaughtsAndCrosses extends JPanel{
 	
 	private static final int ROWS = 3;
 	private static final int COLS = 3;
@@ -22,12 +21,13 @@ public class NaughtsAndCrosses {
 	// A 2 dimensional array of JButton objects. Each button is intended to 
 	// display the text NAUGHT, CROSS or BLANK (see above). 
 	private JButton[][] _board;
-	
+
 	public NaughtsAndCrosses() {
 		// Build the GUI.
 		buildGUI();
 		
 		// TO DO: set up event handlers.
+
 	}
 	
 	private void buildGUI() {
@@ -37,13 +37,17 @@ public class NaughtsAndCrosses {
 		for(int row = 0; row < ROWS; row++) {
 			for(int col = 0; col < COLS; col++) {
 				_board[row][col] = new JButton(BLANK);
+				this.add(_board[row][col]);
 			}
 		}
 
 		// TO DO: create other GUI components and lay them out as appropriate.
 		// Note that _board only stores 9 JButton objects using a 3x3 array. 
 		// The buttons still need to be added to the GUI - use GridLayout to 
-		// add and layout the JButtons on a JPanel.   
+		// add and layout the JButtons on a JPanel. 
+
+		this.setLayout(new GridLayout(3,3));
+		
 	}
 	
 	public static void main(String[] args) {
@@ -53,6 +57,25 @@ public class NaughtsAndCrosses {
 				// TO DO: Create and configure a JFrame to display the GUI.
 				// Make class NaughtsAndCrosses extend JPanel so that a 
 				// NaughtsAndCrosses object can be added to the JFrame.
+				
+				JFrame frame = new JFrame("Naughts and Crosses"); 
+				JPanel p = new JPanel();
+
+				JButton newGame = new JButton("New Game");
+				newGame.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						frame.dispose();
+						run();
+					}
+				});
+				p.add(newGame);
+				
+				frame.add(new NaughtsAndCrosses());
+				frame.add(p, BorderLayout.SOUTH);
+
+				frame.setSize(300,300);
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
 			}
 		});
 	}
@@ -90,10 +113,10 @@ public class NaughtsAndCrosses {
 		
 		// Check to see if there's any cell without a NAUGHT or a CROSS.
 		for(String line : lines) {
-			System.out.println("Looking at line: |" + line + "|");
+			// System.out.println("Looking at line: |" + line + "|");
 			if(line.contains(BLANK)) {
 				status = GameStatus.IN_PROGRESS;
-				System.out.println("In progress");
+				// System.out.println("In progress");
 				break;
 			}
 		}
