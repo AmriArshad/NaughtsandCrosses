@@ -9,6 +9,7 @@ import java.awt.event.*;
 public class NaughtsAndCrosses extends JPanel {
 
 	private boolean winMessageAppeared = false;
+	private JFrame winFrame;
 	private static final int ROWS = 3;
 	private static final int COLS = 3;
 
@@ -51,14 +52,14 @@ public class NaughtsAndCrosses extends JPanel {
 
 						}
 						if (getGameStatus() == GameStatus.NAUGHT_WON && !winMessageAppeared) {
-							JFrame winFrame = new JFrame();
+							winFrame = new JFrame();
 							winFrame.add(new JLabel("Naught won"));
 							winFrame.setSize(100, 50);
 							winFrame.setLocationRelativeTo(null);
 							winFrame.setVisible(true);
 							winMessageAppeared = true;
 						} else if (getGameStatus() == GameStatus.CROSS_WON && !winMessageAppeared) {
-							JFrame winFrame = new JFrame();
+							winFrame = new JFrame();
 							winFrame.add(new JLabel("Cross won"));
 							winFrame.setSize(100, 50);
 							winFrame.setLocationRelativeTo(null);
@@ -70,6 +71,13 @@ public class NaughtsAndCrosses extends JPanel {
 			}
 		}
 
+	}
+
+	public void closeGUIS() {
+		try {
+			winFrame.dispose();
+		} catch (Exception e) {
+		}
 	}
 
 	private void buildGUI() {
@@ -102,17 +110,19 @@ public class NaughtsAndCrosses extends JPanel {
 
 				JFrame frame = new JFrame("Naughts and Crosses");
 				JPanel p = new JPanel();
+				NaughtsAndCrosses NaC = new NaughtsAndCrosses();
 
 				JButton newGame = new JButton("New Game");
 				newGame.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						frame.dispose();
+						NaC.closeGUIS();
 						run();
 					}
 				});
 				p.add(newGame);
 
-				frame.add(new NaughtsAndCrosses());
+				frame.add(NaC);
 				frame.add(p, BorderLayout.SOUTH);
 
 				frame.setSize(300, 300);
