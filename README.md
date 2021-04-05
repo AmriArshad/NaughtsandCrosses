@@ -1,6 +1,6 @@
 # NaughtsandCrosses
 
-CS230 recommended task 2
+A simple version of Naughts and Crosses
 
 ## Screenshots
 
